@@ -31,14 +31,14 @@ struct MenuImage: Codable, Hashable {
 
         var possibleScaleFactors: [Double] = []
 
-        if let newHeight = height, let image, newHeight > 0  {
+        if let newHeight = height, let image, newHeight > 0 {
             let originalHeight = image.size.height
             let scaleFactor = newHeight / originalHeight
 
             possibleScaleFactors.append(scaleFactor)
         }
 
-        if let newWidth = width, let image, newWidth > 0  {
+        if let newWidth = width, let image, newWidth > 0 {
             let originalWidth = image.size.width
             let scaleFactor = newWidth / originalWidth
 
@@ -51,7 +51,7 @@ struct MenuImage: Codable, Hashable {
 
         image?.accessibilityDescription = accessibilityDescription
 
-        if let image  {
+        if let image {
             imageCache[self] = image
         }
 
