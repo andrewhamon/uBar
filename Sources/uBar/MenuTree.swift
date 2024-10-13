@@ -1,9 +1,9 @@
-struct MenuTree: Codable {
-    var id: String?
-    var title: String?
-    var separator: Bool?
-    var indentionLevel: Int?
-    var toolTip: String?
-    var image: MenuImage?
-    var children: [MenuTree]?
+struct MenuTree: Codable, Hashable {
+    let id: String?
+    let title: String?
+    let separator: Bool?
+    let indentionLevel: Int?
+    let toolTip: String?
+    let image: MenuImage?
+    let children: [MenuTree]?
 }

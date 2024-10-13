@@ -4,6 +4,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var imageCache = [MenuImage: NSImage]()
     var statusItem: NSStatusItem?
     var statusBarButton: NSStatusBarButton?
+    var menuTree: MenuTree?
 
     func applicationDidFinishLaunching(_: Notification) {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -17,6 +18,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 let data = Data(line.utf8)
                 do {
                     let menuTree = try JSONDecoder().decode(MenuTree.self, from: data)
+
+                    // Don't do anything if the menu tree hasn't changed
+                    if self.menuTree == menuTree {
+                        continue
+                    }
+
+                    self.menuTree = menuTree
+
                     DispatchQueue.main.async {
                         self.buildMenuBarApp(menuTree)
                     }
