@@ -30,15 +30,15 @@ When the user clicks on an item in the `MenuTree`, uBar will write a
 ### `MenuTree` schema
 
 A MenuTree node has the following schema. All fields are **optional**. Most
-fields directly correspond to a field on [NSMenuItem](https://developer.apple.com/documentation/appkit/nsmenuitem) in
+fields directly correspond to a field on [`NSMenuItem`](https://developer.apple.com/documentation/appkit/nsmenuitem) in
 AppKit.
 
 Some fields are inapplicable and ignored on the root-level node. That is because
 the root node is used to configure the always-visible menubar button (an
 instance of an
-[NSStatusBarButton](https://developer.apple.com/documentation/appkit/nsstatusbarbutton)),
+[`NSStatusBarButton`](https://developer.apple.com/documentation/appkit/nsstatusbarbutton)),
 whereas all child nodes are used to configure instances of
-[NSMenuItem](https://developer.apple.com/documentation/appkit/nsmenuitem).
+[`NSMenuItem`](https://developer.apple.com/documentation/appkit/nsmenuitem).
 
 - `id` - an arbitrary string supplied by you. This ID is included in
   `MenuAction`s written to stdout. Leaf-nodes will be greyed-out and unclickable
