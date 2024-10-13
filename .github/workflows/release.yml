@@ -2,13 +2,14 @@ name: Release
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 
 jobs:
   build_release:
     runs-on: macos-latest
     permissions:
       contents: write
+      attestations: write
 
     steps:
     - uses: actions/checkout@v4
@@ -17,7 +18,12 @@ jobs:
       run: swift test -v
 
     - name: Build
-      run: swift build -c release --arch arm64 --arch x86_64rm
+      run: swift build -c release --arch arm64 --arch x86_64
+
+    - name: Generate artifact attestation
+      uses: actions/attest-build-provenance@v1
+      with:
+        subject-path: ".build/apple/Products/Release/uBar"
 
     - uses: ncipollo/release-action@v1
       with:
