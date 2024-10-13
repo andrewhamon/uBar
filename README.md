@@ -49,10 +49,11 @@ in AppKit.
   - `path` - Path on disk to an image to render.
   - `url` - HTTP URL of a remote image to download an render.
   - `accessibilityDescription` - Accessibility description passed to the NSImage
-  - `width` - If specified, the image will be scaled down proportionally to this
-    width, maintaining its aspect ratio. Only one of width or height can be specified.
-  - `height` - If specified, the image will be scaled down proportionally to
-    this height, maintaining its aspect ratio. Only one of width or height can be specified.
+  - `width`, `height` - One or both of the values may be specified, and will be
+    used to scale the image. If both are specified, the image will be scaled so
+    that it does not exceed either dimension. Aspect ratio is always preserved.
+    Negative values will be ignored.
+
 - `children` - An array of child nodes with this same schema.
 
 ### MenuAction schema

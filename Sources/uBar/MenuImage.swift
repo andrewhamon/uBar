@@ -1,59 +1,58 @@
 import AppKit
 
 struct MenuImage: Codable, Hashable {
-    var url: String?
-    var path: String?
-    var systemSymbolName: String?
-    var accessibilityDescription: String?
-    var width: Double?
-    var height: Double?
+    let url: String?
+    let path: String?
+    let systemSymbolName: String?
+    let accessibilityDescription: String?
+    let width: Double?
+    let height: Double?
 
     func toNSImage(_ imageCache: inout [MenuImage: NSImage]) -> NSImage? {
-        if let cachedImage = imageCache[self] {
-            return cachedImage
+        if let image = imageCache[self] {
+            return image
         }
 
         var image: NSImage? = nil
 
         if let systemSymbolName {
-            if let img = NSImage(systemSymbolName: systemSymbolName, accessibilityDescription: accessibilityDescription) {
-                image = img
-            }
+            image = NSImage(systemSymbolName: systemSymbolName, accessibilityDescription: accessibilityDescription)
         }
 
         if let path {
-            if let img = NSImage(contentsOfFile: path) {
-                image = img
-            }
+            image = NSImage(contentsOfFile: path)
         }
 
         if let url {
             if let urlObj = URL(string: url) {
-                if let img = NSImage(contentsOf: urlObj) {
-                    image = img
-                }
+                image = NSImage(contentsOf: urlObj)
             }
         }
 
-        if let height, let img = image, width == nil {
-            let originalHeight = img.size.height
-            let originalWidth = img.size.width
-            let scaleFactor = CGFloat(height) / originalHeight
-            let width = originalWidth * scaleFactor
-            image?.size = NSSize(width: width, height: height)
+        var possibleScaleFactors: [Double] = []
+
+        if let newHeight = height, let image, newHeight > 0  {
+            let originalHeight = image.size.height
+            let scaleFactor = newHeight / originalHeight
+
+            possibleScaleFactors.append(scaleFactor)
         }
 
-        if let width, let img = image, height == nil {
-            let originalHeight = img.size.height
-            let originalWidth = img.size.width
-            let scaleFactor = CGFloat(width) / originalWidth
-            let height = originalHeight * scaleFactor
-            image?.size = NSSize(width: width, height: height)
+        if let newWidth = width, let image, newWidth > 0  {
+            let originalWidth = image.size.width
+            let scaleFactor = newWidth / originalWidth
+
+            possibleScaleFactors.append(scaleFactor)
+        }
+
+        if let scaleFactor = possibleScaleFactors.min(), let image {
+            image.size = NSSize(width: image.size.width * scaleFactor, height: image.size.height * scaleFactor)
         }
 
         image?.accessibilityDescription = accessibilityDescription
-        if let img = image {
-            imageCache[self] = img
+
+        if let image  {
+            imageCache[self] = image
         }
 
         return image
