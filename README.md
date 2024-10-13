@@ -20,22 +20,30 @@ applied instantly.
 
 ## Protocol
 
-uBar expects to read a series of JSON-encoded messages, one per line. When a new
-line is received, it is decoded and rendered. To change what uBar renders, just
-send it a new JSON line.
+uBar expects to read a series of JSON-encoded messages, one per line. Each
+message represents a root `MenuTree`. To change what uBar renders, just send it
+a new JSON-encoded `MenuTree`.
 
-uBar does not support partial updates. Each message must contain a full menu
-tree.
+When the user clicks on an item in the `MenuTree`, uBar will write a
+`MenuAction` to stdout.
 
-### MenuTree schema
+### `MenuTree` schema
 
-A MenuTree node has the following fields. All fields are optional. For the most
-part, uBar tracks 1-1 with the [stock NSMenuItem
-features](https://developer.apple.com/documentation/appkit/nsmenuitem) available
-in AppKit.
+A MenuTree node has the following schema. All fields are **optional**. Most
+fields directly correspond to a field on [NSMenuItem
+features](https://developer.apple.com/documentation/appkit/nsmenuitem) in
+AppKit.
+
+Some fields are inapplicable and ignored on the root-level node. That is because
+the root node is used to configure the always-visible menubar button (an
+instance of an
+[NSStatusBarButton](https://developer.apple.com/documentation/appkit/nsstatusbarbutton)),
+whereas all child nodes are used to configure instances of
+[NSMenuItem](https://developer.apple.com/documentation/appkit/nsmenuitem).
 
 - `id` - an arbitrary string supplied by you. This ID is included in
-  MenuAction's written to stdout.
+  `MenuAction`s written to stdout. Leaf-nodes will be greyed-out and unclickable
+  if no `id` is specified.
 - `title` - The title of the menu item, or the title rendered in the menubar if
   if specified on the root.
 - `separator` - If true, the node is treated as a separator and all other fields
@@ -53,13 +61,12 @@ in AppKit.
     used to scale the image. If both are specified, the image will be scaled so
     that it does not exceed either dimension. Aspect ratio is always preserved.
     Negative values will be ignored.
+- `children` - A list of child `MenuTree`s.
 
-- `children` - An array of child nodes with this same schema.
+### `MenuAction` schema
 
-### MenuAction schema
-
-When a menu item is clicked, a MenuAction is written to stdout with the
+When a menu item is clicked, a `MenuAction` is written to stdout with the
 following fields:
 
 - `type` - always a value of `click`. More types may be added in the future.
-- `id` - The ID of the node that was clicked.
+- `id` - The ID of the `MenuTree` node that was clicked.
