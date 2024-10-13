@@ -30,7 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         self.buildMenuBarApp(menuTree)
                     }
                 } catch {
-                    fputs("Error decoding JSON: \(error)", stderr)
+                    fputs("Error decoding JSON: \(error)\n", stderr)
                 }
             }
         }
