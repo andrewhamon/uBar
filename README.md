@@ -30,8 +30,7 @@ When the user clicks on an item in the `MenuTree`, uBar will write a
 ### `MenuTree` schema
 
 A MenuTree node has the following schema. All fields are **optional**. Most
-fields directly correspond to a field on [NSMenuItem
-features](https://developer.apple.com/documentation/appkit/nsmenuitem) in
+fields directly correspond to a field on [NSMenuItem](https://developer.apple.com/documentation/appkit/nsmenuitem) in
 AppKit.
 
 Some fields are inapplicable and ignored on the root-level node. That is because
