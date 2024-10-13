@@ -1,0 +1,22 @@
+name: Release
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build_release:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run tests
+      run: swift test -v
+
+    - name: Build
+      run: swift build -c release --arch arm64 --arch x86_64rm
+
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: ".build/apple/Products/Release/uBar"
