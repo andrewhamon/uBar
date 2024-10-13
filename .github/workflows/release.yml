@@ -8,6 +8,7 @@ jobs:
   build_release:
     runs-on: macos-latest
     permissions:
+      id-token: write
       contents: write
       attestations: write
 
