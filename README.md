@@ -11,12 +11,57 @@ writing lightweight menubar applications in any language.
 
 ## Getting started
 
-For the time being, uBar is only packaged in nix. I hope to add precompiled
-github releases soon.
+uBar is available via `nix` or as a prebuilt binary.
 
-If you have nix installed, you can run `./playground.sh` which will launch an
-example. You can edit [playground.json](./playground.json) and see your updates
-applied instantly.
+<details>
+<summary>Using nix</summary>
+
+```bash
+menu='{"title":"uBar", "children": [{"title": "Click me!", "id": "1"}]}'
+echo "$menu" | nix run github:andrewhamon/uBar
+```
+
+</details>
+
+<details>
+<summary>Using a pre-built binary</summary>
+
+A universal binary is built with each GitHub release.
+
+```bash
+curl -L "https://github.com/andrewhamon/uBar/releases/latest/download/uBar" -o uBar
+chmod +x uBar
+
+# optional: verify the binary provenance with the gh cli
+gh attestation verify uBar --repo andrewhamon/uBar
+
+menu='{"title":"uBar", "children": [{"title": "Click me!", "id": "1"}]}'
+echo "$menu" | ./uBar
+```
+
+</details>
+
+
+### Demo
+There is a small demo script which allows for rapid iteration of a uBar UI. A
+swift toolchain and `jq` are required.
+
+<details>
+<summary>Live-editable demo</summary>
+
+If you have a swift toolchain and `jq` installed, you can clone the repo and run
+`./demo.sh`. Any changes to `demo.json` should be reflected instantly.
+
+```bash
+git clone https://github.com/andrewhamon/uBar.git
+cd uBar
+./demo.sh
+
+# make edits to demo.json
+vim demo.json
+```
+
+</details>
 
 ## Protocol
 
