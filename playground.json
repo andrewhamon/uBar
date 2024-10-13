@@ -1,0 +1,42 @@
+{
+  "title": "µBar Demo",
+  "toolTip": "You can even write menubar apps in bash!",
+  "children": [
+    {
+      "toolTip": "This menu item has no ID, so will not be clickable",
+      "title": "menu item 1",
+      "children": [
+        {
+          "id": "1",
+          "title": "sub menu item 1",
+          "toolTip": "Find symbol names using the SF Symbols app. https://developer.apple.com/sf-symbols/",
+          "image": {
+            "systemSymbolName": "exclamationmark.triangle.fill"
+          }
+        },
+        {
+          "separator": true
+        },
+        {
+          "id": "2",
+          "title": "stonks",
+          "toolTip": "Setting a height or a width will scale the image to that size while maintaining aspect ratio. If both are set, they will be ignored. This may change in the future.",
+          "image": {
+            "url": "https://static.wikia.nocookie.net/surrealmemes/images/8/80/2f0.png/revision/latest?cb=20190823154313",
+            "height": 50
+          }
+        },
+        {
+          "separator": true
+        },
+        {
+          "toolTip": "This menu item is not clickable, since it has no ID. Since it also has no children, it will be greyed out as well.",
+          "title": "Unclickable leaf"
+        },
+        {
+          "toolTip": "With no title and no image, an empty space will be rendered"
+        }
+      ]
+    }
+  ]
+}
